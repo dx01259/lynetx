@@ -26,6 +26,7 @@ set(CXX_FLAGS
  -rdynamic
  )
 
+set(CMAKE_MACOSX_RPATH 0)
 #SET(CMAKE_CXX_FLAGS "-std=c++11")
 set(CMAKE_CXX_COMPILER "g++")
 

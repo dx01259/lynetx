@@ -10,8 +10,9 @@
 
 #include"Log.h"
 #include<errno.h>
+#ifdef linux
 #include<bits/errno.h>
-
+#endif
 
 extern int errno;
 

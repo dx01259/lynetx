@@ -30,7 +30,7 @@ int CAsyncSocket::CreateSocket(const char *ip, const short port, int protocol)
 {
 	int type = (protocol!=PROTO_UDP ? SOCK_STREAM:SOCK_DGRAM);
 	int sockfd = Socket(AF_INET, type, 0);
-	if(sockfd > 0)
+	if(sockfd !=INVaLID_SOCKET)
 	{
 		m_socket = sockfd;
 		struct sockaddr_in servaddr;
@@ -51,7 +51,11 @@ int CAsyncSocket::CreateSocket(const char *ip, const short port, int protocol)
 		}
 		return sockfd;
 	}
-	return 0;
+	else
+	{
+		TRACE_ERR(LOG_ERRORS, errno, 101, "Create the socket object is error");
+		return -1;
+	}
 }
 
 void CAsyncSocket::CloseSocket()
@@ -91,7 +95,7 @@ int CAsyncSocket::SetAsyncSocket(int sockfd)
 			return -1;
 		}
 		TRACE_MSG(LOG_DEBUGS, 100, "Socket %d set SOCK_NONBLOCK is success", sockfd);
-		return sockfd;
+		return 0;
 	}
 	return -2;
 }

@@ -48,8 +48,15 @@ int CLocalIpList::GetLocalIpList()
 	char **p = phost->h_addr_list;
 	for(; *p!=NULL; ++p)
 	{
-		string strip = inet_ntoa(*(in_addr *)(*p));
-		this->m_iplist.push_back(strip);
+		char str[16];
+		inet_ntop(phost->h_addrtype, *p, str, sizeof(str)); //网络二进制--点分十进制 ntop比较新
+		this->m_iplist.push_back(str);
+
+		/*in_addr addr;
+		memcpy(&addr.S_un.S_addr, *p, phost->h_length);
+		char *v4ip = ::inet_ntoa(addr);
+		string strip(v4ip);*/
+		//this->m_iplist.push_back(strip);
 	}
 
 	return (int)m_iplist.size();

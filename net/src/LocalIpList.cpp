@@ -31,6 +31,12 @@ CLocalIpList::~CLocalIpList()
 
 int CLocalIpList::GetLocalIpList()
 {
+	WSADATA wsaData;
+	if (WSAStartup(MAKEWORD(2, 2), &wsaData))
+	{
+		printf("failed to init winsock!");
+		return -1;
+	}
 	this->m_iplist.clear();
 	char name[128];
 	if(-1 == gethostname(name, sizeof(name)))
